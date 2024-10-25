@@ -1,0 +1,17 @@
+{
+	"name": "tf2-extract-warpaints",
+	"version": "0.0.1",
+	"description": "Converts proto_defs.vpd to json format",
+	"main": "./dist/index.js",
+	"scripts": {
+		"start": "node ./dist/index.js ./var/proto_defs.vpd ./proto/tf_proto_def_messages.proto ./var/warpaint_definitions.json"
+	},
+	"type": "module",
+	"dependencies": {
+		"harmony-binary-reader": "github:baldurstod/harmony-binary-reader",
+		"protobufjs": "^7.4.0"
+	},
+	"devDependencies": {
+		"typescript": "^5.6.3"
+	}
+}
