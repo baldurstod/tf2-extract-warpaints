@@ -1,2 +1,2 @@
 # tf2-extract-warpaints
-Converts tf2 warpaints to json
+Converts proto_defs.vpd to json format
