@@ -1,10 +1,10 @@
 import { BinaryReader } from 'harmony-binary-reader';
 
-import protobufjs, { Root } from 'protobufjs'
+import protobufjs from 'protobufjs'
 import { readFile } from 'fs/promises';
 import { writeFile } from 'fs/promises';
 
-const _protoElements: any = {};
+const _protoElements = {};
 const typeLookup = [
 	null,
 	null,
@@ -29,21 +29,23 @@ const output_file = process.argv[4];
 
 initProtoDefs();
 
+
 function initProtoDefs() {
-	protobufjs.load(tf_proto_def_messages_path, async (err, root?: Root) => {
-		if (err) {
-			throw err;
+	const root = new protobufjs.Root();
+	root.load(tf_proto_def_messages_path,
+		//{ keepCase: true },
+		async (err, root) => {
+			if (err) {
+				throw err;
+			}
+			await readProtoDefs(root);
+			await writeFile(output_file, JSON.stringify(_protoElements, undefined, ''));
 		}
-		await readProtoDefs(root);
-		await writeFile(output_file, JSON.stringify(_protoElements));
-	});
+	);
 }
 
 
-async function readProtoDefs(root?: Root) {
-	if (!root) {
-		return;
-	}
+async function readProtoDefs(root) {
 	let protoDefsFile = await readFile(proto_defs_path);
 
 	let reader = new BinaryReader(protoDefsFile, undefined, undefined, true);
@@ -72,7 +74,7 @@ async function readProtoDefs(root?: Root) {
 			if (type && type.decode) {
 				var bufferSliceWhereProtobufBytesIs = reader.getBytes(elementSize);
 				var msg = type.decode(bufferSliceWhereProtobufBytesIs);
-				_protoElements[elementType][(msg as any).header.defindex] = msg;
+				_protoElements[elementType][msg.header.defindex] = msg;
 			}
 		}
 	}

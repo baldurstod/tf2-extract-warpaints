@@ -4,7 +4,7 @@
 	"description": "Converts proto_defs.vpd to json format",
 	"main": "./dist/index.js",
 	"scripts": {
-		"start": "node ./dist/index.js ./var/proto_defs.vpd ./proto/tf_proto_def_messages.proto ./var/warpaint_definitions.json"
+		"start": "node ./src/index.js ./var/proto_defs.vpd ./proto/tf_proto_def_messages.proto ./var/warpaint_definitions.json"
 	},
 	"type": "module",
 	"dependencies": {
